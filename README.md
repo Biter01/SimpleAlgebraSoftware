@@ -19,7 +19,11 @@ A lightweight algebra library for working with **matrices**, **vectors** and **l
 ## Examples
 
 ### Solve a linear system
-```java
+```text
+import static structures.Matrix.*;
+
+...
+
 double[][] v = {
     {1, 1, 0, 0, 0, 0, 0, 1},
     {0, 1, 1, 0, 0, 0, 0, 2},
