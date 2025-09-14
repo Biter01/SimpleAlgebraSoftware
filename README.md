@@ -27,7 +27,7 @@ double[][] v = {
     {0, 0, 0, 1, 1, 1, 1, 4}
 };
 
-System.out.println(Arrays.toString(Matrix.linearSolve(v)));
+System.out.println(Arrays.toString(linearSolve(v)));
 
 // Output ->
 // [1.0*e + 1.0*f + 1.0*g - 2.0,
@@ -42,7 +42,7 @@ double[][] u = {
     {150, 220, 120, 194000}
 };
 
-System.out.println(Arrays.toString(Matrix.linearSolve(u)));
+System.out.println(Arrays.toString(linearSolve(u)));
 
 // Output [600.0, 200.0, 500.0]
 
