@@ -19,7 +19,7 @@ A lightweight algebra library for working with **matrices**, **vectors** and **l
 ## Examples
 
 ### Solve a linear system
-```text
+```java
 import static structures.Matrix.*;
 
 ...
