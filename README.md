@@ -4,12 +4,13 @@ A lightweight algebra library for working with **matrices**, **vectors** and **l
 
 ## Features
 
-### Matrices
+### Matrices in $\mathbb{R}^{n \times m}$
+
 - Solve linear systems
 - Gauss elimination
 - Matrix multiplication
 
-### Vectors in ℝⁿ
+### Vectors in $\mathbb{R}^{n}$
 - Basic operations (addition, scaling, …)
 - Scalar product
 
@@ -48,5 +49,19 @@ double[][] u = {
 
 System.out.println(Arrays.toString(linearSolve(u)));
 
-// Output [600.0, 200.0, 500.0]
+// Output -> [600.0, 200.0, 500.0]
+```
+### Work with LinearExpression
 
+```java
+LinearExpression e3 =  e1.add(e2);
+LinearExpression e1 = new LinearExpression("-3*y + 5*x + 5");
+LinearExpression e2 = new LinearExpression("1*x - 5*y - 20 +2*y");
+LinearExpression e3 =  e1.add(e2);
+
+System.out.println(e3);
+//Output -> 6.0*x - 6.0*y - 15.0
+
+System.out.println(e3.multiplyConstant(5));
+//Output -> 30.0*x - 30.0*y - 75.0
+```
