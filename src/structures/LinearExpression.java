@@ -40,13 +40,31 @@ public class LinearExpression {
 
     public LinearExpression(String inputStr) {
         // "-" durch "+-" ersetzen, damit split funktioniert
+        if(inputStr.isEmpty()) {
+            return;
+        }
+
         String[] terms = getTerms(inputStr);
         convertToExpression(terms);
     }
 
     private String[] getTerms(String inputStr) {
-        String outputStr = inputStr.replace("-", "+-");
-        return outputStr.split("\\+");
+        String firstSign = inputStr.substring(0, 1);
+        String replacedString;
+
+        replacedString = inputStr.substring(1).replace("-", "+-");
+
+        String normalizedString;
+
+        if(replacedString.charAt(0) == '+') {
+            normalizedString = replacedString.substring(1);
+        } else {
+            normalizedString = replacedString;
+        }
+
+        normalizedString = normalizedString.replace(" ", "");
+
+        return normalizedString.split("\\+");
     }
 
     private void convertToExpression(String[] terms) {

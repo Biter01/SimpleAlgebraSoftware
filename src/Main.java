@@ -1,3 +1,4 @@
+import structures.LinearExpression;
 import structures.RVector;
 
 import java.util.Arrays;
@@ -16,7 +17,11 @@ public class Main {
 
         System.out.println(sum + "\n " + scalarProd);
 
-        double[][] u = {{3,11,10,9000},{6,2,2,5000},{150,220,120,194000}};
+        double[][] u = {
+                {3,11,10,9000},
+                {6,2,2,5000},
+                {150,220,120,194000}
+        };
 
         double[][] v = {{0,2,1,-4,0}, {1,5,3,-3,0}, {0,0,1,6,0}};
 
@@ -55,14 +60,21 @@ public class Main {
                 {0, 0, 0, 1, 1, 1, 1, 4}    // x4 + x5 + x6 + x7 = 4
         };
 
-
         System.out.println(Arrays.toString(linearSolve(u)));
-        // Output -> [600.0, 200.0, 500.0]
+         //Output -> [600.0, 200.0, 500.0]
 
         System.out.println(Arrays.toString(linearSolve(v)));
         //Output -> [-4.0*d, 5.0*d, -6.0*d, 1.0*d]
 
         System.out.println(Arrays.toString(linearSolve(A_B)));
         //Output -> [1.0*e + 1.0 *f + 1.0 *g - 2.0 , -1.0*e - 1.0 *f - 1.0 *g + 3.0 , 1.0*e + 1.0 *f + 1.0 *g - 1.0 , -1.0*e - 1.0 *f - 1.0 *g + 4.0 , 1.0*e, 1.0*f, 1.0*g]
+
+        LinearExpression e1 = new LinearExpression("-3*y + 5*x + 5");
+        LinearExpression e2 = new LinearExpression("1*x - 5*y - 20");
+        LinearExpression e3 =  e1.add(e2);
+
+        System.out.println(e3);
+        System.out.println(e3.multiplyConstant(5));
+
     }
 }
