@@ -70,9 +70,8 @@ public class Main {
         //Output -> [1.0*e + 1.0 *f + 1.0 *g - 2.0 , -1.0*e - 1.0 *f - 1.0 *g + 3.0 , 1.0*e + 1.0 *f + 1.0 *g - 1.0 , -1.0*e - 1.0 *f - 1.0 *g + 4.0 , 1.0*e, 1.0*f, 1.0*g]
 
         LinearExpression e1 = new LinearExpression("-3*y + 5*x + 5");
-        LinearExpression e2 = new LinearExpression("1*x - 5*y - 20");
+        LinearExpression e2 = new LinearExpression("1*x - 5*y - 20 +2*y");
         LinearExpression e3 =  e1.add(e2);
-
         System.out.println(e3);
         System.out.println(e3.multiplyConstant(5));
 

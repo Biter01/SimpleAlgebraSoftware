@@ -49,10 +49,8 @@ public class LinearExpression {
     }
 
     private String[] getTerms(String inputStr) {
-        String firstSign = inputStr.substring(0, 1);
-        String replacedString;
 
-        replacedString = inputStr.substring(1).replace("-", "+-");
+        String replacedString = inputStr.replace("-", "+-");
 
         String normalizedString;
 
