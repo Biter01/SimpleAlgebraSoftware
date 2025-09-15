@@ -27,7 +27,6 @@ public class Matrix {
 
     public static LinearExpression[] linearSolve(double[][] a) {
         double[][] reducedMatrix = gaussElimination(a);
-        System.out.println(Matrix.stringOf(reducedMatrix));
 
         if(!isMatrixSolveable(reducedMatrix)) {
             throw new IllegalArgumentException("Matrix is not solvable");
