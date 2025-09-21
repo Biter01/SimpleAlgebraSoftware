@@ -9,6 +9,7 @@ A lightweight algebra library for working with **matrices**, **vectors** and **l
 - Solve linear systems
 - Gauss elimination
 - Matrix multiplication
+- Calculate Determinant with Laplace Extension
 
 ### Vectors in $\mathbb{R}^{n}$
 - Basic operations (addition, scaling, …)
@@ -64,4 +65,23 @@ System.out.println(e3);
 
 System.out.println(e3.multiplyConstant(5));
 //Output -> 30.0*x - 30.0*y - 75.0
+```
+
+### Multiply Matrices and calculate Determinants
+
+```java
+double [][] c = {
+    {2,1,3},
+    {0,4,1},
+    {5,2,6}
+};
+
+System.out.println(laplaceExpension(c));
+//Output -> -11.0
+
+double[][] a = {{1,2,3},{4,5,6},{7,8,9}};
+double[][] b = {{1,2},{4,5},{7,8}};
+
+System.out.println(Arrays.deepToString(multiplyMatrix(a, b)));
+//Output -> [[30.0, 36.0], [66.0, 81.0], [102.0, 126.0]]
 ```
