@@ -70,6 +70,8 @@ System.out.println(e3.multiplyConstant(5));
 ### Multiply Matrices and calculate determinants
 
 ```java
+import static structures.Matrix.*;
+
 double [][] c = {
     {2,1,3},
     {0,4,1},
