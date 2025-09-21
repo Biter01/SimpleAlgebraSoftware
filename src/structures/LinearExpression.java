@@ -1,7 +1,10 @@
 package structures;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 
 public class LinearExpression {
     private final Map<String, Double> expression = new TreeMap<>((s1, s2) -> {
@@ -12,57 +15,93 @@ public class LinearExpression {
         }
     });
 
-    private static class Term {
-        String operator;
-        String coefficientString;
-        String key;
-        boolean isFirst;
-        String multiplier = "*";
-
-        StringBuilder termRep = new StringBuilder();
-
-        private Term(String coefficientString, String key) {
-            this.operator = "";
-            this.multiplier = "*";
-            this.isFirst = false;
-            this.coefficientString = coefficientString;
-            this.key = key;
-        }
-
-        private void append(String str) {
-            termRep.append(str);
-        }
-
-        private void negate() {
-            coefficientString = coefficientString.substring(1);
-        }
-    }
-
     public LinearExpression(String inputStr) {
-        // "-" durch "+-" ersetzen, damit split funktioniert
-        if(inputStr.isEmpty()) {
+        if(inputStr.isBlank()) {
             return;
         }
 
-        String[] terms = getTerms(inputStr);
+        String normalizedString = inputStr.replace(" ", "");
+
+        LinearExpressionValidator.validate(normalizedString);
+
+        String[] terms = getTerms(normalizedString);
+
         convertToExpression(terms);
     }
 
-    private String[] getTerms(String inputStr) {
+    public static class LinearExpressionValidator {
 
-        String replacedString = inputStr.replace("-", "+-");
+        private static final Pattern NUMBER = Pattern.compile("[-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?");
 
-        String normalizedString;
+        private static final Pattern VARIABLE = Pattern.compile("[a-z]"); // nur Kleinbuchstaben!
 
-        if(replacedString.charAt(0) == '+') {
-            normalizedString = replacedString.substring(1);
-        } else {
-            normalizedString = replacedString;
+        public static void validate(String expr) {
+            // 1. Basischecks
+            if (expr.isEmpty()) {
+                throw new IllegalArgumentException("Expression cannot be empty");
+            }
+            if (expr.charAt(0) == '+') {
+                throw new IllegalArgumentException("Unnecessary '+' at start in LinExp");
+            }
+            if (expr.contains("--") || expr.contains("++") || expr.contains("**")) {
+                throw new IllegalArgumentException("Too many signs in LinExp");
+            }
+            if (expr.contains("=")) {
+                throw new IllegalArgumentException("Linear expressions must not contain '='");
+            }
+
+            // 2. Zeichenprüfung
+            expr.chars()
+                    .mapToObj(c -> (char) c)
+                    .forEach(ch -> {
+                        if (!isLegalChar(ch)) {
+                            throw new IllegalArgumentException("Invalid character '" + ch + "'");
+                        }
+                    });
+
+            // 3. Normalisierte Terme prüfen
+            Arrays.stream(getTerms(expr))
+                    .forEach(LinearExpressionValidator::validateTerm);
         }
 
-        normalizedString = normalizedString.replace(" ", "");
+        private static void validateTerm(String term) {
 
-        return normalizedString.split("\\+");
+            String core = term; // Kopie vom Original-String
+
+            // Nur das führende '+' entfernen
+            if (core.startsWith("+") || core.startsWith("-")) {
+                core = core.substring(1);
+            }
+
+            Arrays.stream(core.split("\\*")) // substring(1) entfernt das führende '+'
+                    .filter(factor -> !isValidFactor(factor))
+                    .findAny()
+                    .ifPresent(invalid -> {
+                        throw new IllegalArgumentException(
+                                "Invalid factor '" + invalid + "' in term: " + term
+                        );
+                    });
+        }
+
+        private static boolean isValidFactor(String token) {
+            return NUMBER.matcher(token).matches() || VARIABLE.matcher(token).matches();
+        }
+
+        private static boolean isLegalChar(char c) {
+            return Character.isDigit(c) || (c >= 'a' && c <= 'z') || c == '+' || c == '-' || c == '*' || c == '.' || c == 'E';
+        }
+
+    }
+
+    private static String[] getTerms(final String normalizedString) {
+
+        String replacedString = normalizedString.replace("-", "+-");
+
+        if(replacedString.charAt(0) == '+') {
+            replacedString = replacedString.substring(1);
+        }
+
+        return replacedString.split("\\+");
     }
 
     private void convertToExpression(String[] terms) {
@@ -92,7 +131,7 @@ public class LinearExpression {
         }
     }
 
-    public LinearExpression add(LinearExpression other) {
+    public LinearExpression add(LinearExpression other)  {
         LinearExpression result = new LinearExpression("");
         result.expression.putAll(this.expression);
 
@@ -105,7 +144,7 @@ public class LinearExpression {
         return result;
     }
 
-    public LinearExpression subtract(LinearExpression other) {
+    public LinearExpression subtract(LinearExpression other)  {
         LinearExpression result = new LinearExpression("");
         result.expression.putAll(this.expression);
 
@@ -118,7 +157,7 @@ public class LinearExpression {
         return result;
     }
 
-    public LinearExpression multiplyConstant(double c) {
+    public LinearExpression multiplyConstant(double c)  {
         LinearExpression result = new LinearExpression("");
         result.expression.putAll(this.expression);
 
@@ -146,10 +185,37 @@ public class LinearExpression {
         });
     }
 
+    private static class TermComponent {
+        String operator;
+        String coefficientString;
+        String key;
+        boolean isFirst;
+        String multiplier = "*";
+
+        StringBuilder termRep = new StringBuilder();
+
+        private TermComponent(String coefficientString, String key) {
+            this.operator = "";
+            this.multiplier = "*";
+            this.isFirst = false;
+            this.coefficientString = coefficientString;
+            this.key = key;
+        }
+
+        private void append(String str) {
+            termRep.append(str);
+        }
+
+        private void negate() {
+            coefficientString = coefficientString.substring(1);
+        }
+    }
+
     @Override
     public String toString() {
 
         if(expression.isEmpty()) return "0";
+        removeZeroCoefficents(this);
 
         StringBuilder expressionString = new StringBuilder();
 
@@ -157,7 +223,7 @@ public class LinearExpression {
 
         expression.forEach((key, coefficient) -> {
 
-            Term term = new Term(coefficient.toString(), key);
+            TermComponent term = new TermComponent(coefficient.toString(), key);
 
             if(counter.get() == 1) {
                 term.isFirst = true;
@@ -173,11 +239,6 @@ public class LinearExpression {
                 term.negate();
             } else if(coefficient > 0) {
                 term.operator = "+";
-            } else {
-                term.operator = "";
-                term.coefficientString = "";
-                term.key = "";
-                term.multiplier = "";
             }
 
             expressionString.append(buildTermString(term));
@@ -185,10 +246,10 @@ public class LinearExpression {
             counter.getAndIncrement();
         });
 
-        return expressionString.toString();
+        return expressionString.toString().strip();
     }
 
-    private String buildTermString(Term term) {
+    private String buildTermString(TermComponent term) {
         if(term.isFirst) {
             if(term.operator.equals("-")) {
                 term.append(term.operator + term.coefficientString + term.multiplier + term.key);
@@ -200,5 +261,23 @@ public class LinearExpression {
         }
 
         return term.termRep.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true ;
+        if (o == null || getClass() != o.getClass()) return false;
+        LinearExpression that = (LinearExpression) o;
+
+        removeZeroCoefficents(this);
+        removeZeroCoefficents(that);
+
+        return expression.equals(that.expression);
+    }
+
+    @Override
+    public int hashCode() {
+        removeZeroCoefficents(this);
+        return Objects.hashCode(expression);
     }
 }

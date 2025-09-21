@@ -1,13 +1,11 @@
 package structures;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import structures.exceptions.NoSolutionException;
+import java.util.*;
 
 public class Matrix {
 
     public static double[][] multiplyMatrix(double[][] a, double[][] b) {
-        if(a.length != b[0].length) {
+        if(a[0].length != b.length) {
             throw new IllegalArgumentException("structures.Matrix does not have the same number of columns and rows");
         }
 
@@ -21,15 +19,14 @@ public class Matrix {
                 }
             }
         }
-
         return c;
     }
 
-    public static LinearExpression[] linearSolve(double[][] a) {
+    public static LinearExpression[] linearSolve(double[][] a) throws NoSolutionException {
         double[][] reducedMatrix = gaussElimination(a);
 
         if(!isMatrixSolveable(reducedMatrix)) {
-            throw new IllegalArgumentException("Matrix is not solvable");
+            throw new NoSolutionException("LinSystem as coefficient Matrix is not solvable");
         }
 
         int n = reducedMatrix.length;
@@ -39,7 +36,7 @@ public class Matrix {
 
     }
 
-    private static LinearExpression[] solveForVariables(double[][] reducedMatrix, int n, int m) {
+    private static LinearExpression[] solveForVariables(double[][] reducedMatrix, int n, int m)  {
         int solutionColumn = m-1;
         int variablesAmount = m-1;
 
@@ -103,13 +100,13 @@ public class Matrix {
         return true;
     }
 
-    private static void addRHS(List<LinearExpression> rowValueVec, int rowIdx, int solutionColumn, double[][] reducedMatrix) {
+    private static void addRHS(List<LinearExpression> rowValueVec, int rowIdx, int solutionColumn, double[][] reducedMatrix)  {
         double rowSolutionField = reducedMatrix[rowIdx][solutionColumn];
         String rowSolutionFieldStr = rowSolutionField + "";
         rowValueVec.addFirst(new LinearExpression(rowSolutionFieldStr));
     }
 
-    private static void calculateSolution(List<LinearExpression> rowValueVec, LinearExpression[] solutionVec, double pivotValue, int colPivotIndex) {
+    private static void calculateSolution(List<LinearExpression> rowValueVec, LinearExpression[] solutionVec, double pivotValue, int colPivotIndex)  {
         LinearExpression rowSolution = rowValueVec.removeLast();
         for(LinearExpression rowValue : rowValueVec) {
             rowSolution = rowSolution.subtract(rowValue);
@@ -122,7 +119,7 @@ public class Matrix {
         rowValueVec.clear();
     }
 
-    private static void substituteSolutions(double[][] reducedMatrix, LinearExpression[] solutionVec, List<LinearExpression> rowValueVec , int colPivotIdx, int currRowIdx) {
+    private static void substituteSolutions(double[][] reducedMatrix, LinearExpression[] solutionVec, List<LinearExpression> rowValueVec , int colPivotIdx, int currRowIdx)  {
         for(int colIdx = solutionVec.length-1; colIdx > colPivotIdx; colIdx--) {
             double currField = reducedMatrix[currRowIdx][colIdx];
             LinearExpression substitutedRowValue = solutionVec[colIdx].multiplyConstant(currField);
@@ -130,7 +127,7 @@ public class Matrix {
         }
     }
 
-    private static void setFreeVars(List<LinearExpression> rowVec, LinearExpression[] solutionVec , int colPivotIndex, int diagonalStepIdx) {
+    private static void setFreeVars(List<LinearExpression> rowVec, LinearExpression[] solutionVec , int colPivotIndex, int diagonalStepIdx)  {
 
         int freeVariableIdx = diagonalStepIdx;
 
@@ -140,7 +137,7 @@ public class Matrix {
         }
     }
 
-    private static void addFreeVar(int freeVariableIdx, List<LinearExpression> rowVec, LinearExpression[] solutionVec) {
+    private static void addFreeVar(int freeVariableIdx, List<LinearExpression> rowVec, LinearExpression[] solutionVec)  {
         char freeVariableSymbol = (char)(freeVariableIdx % 26 + 97);
 
         String linearExpressionString = "1 *" + freeVariableSymbol ;
@@ -161,10 +158,9 @@ public class Matrix {
         return colPivotIndex;
     }
 
-
     public static  double[][] gaussElimination(double[][] matrix) {
         if(matrix.length == 0 || matrix[0].length == 0) {
-            throw new IllegalArgumentException("structures.Matrix does not have the same number of columns and rows");
+            throw new IllegalArgumentException("structures.Matrix has no rows and columns");
         }
 
         sortEquations(matrix);
@@ -189,7 +185,8 @@ public class Matrix {
             }
 
             if(colPivotIndex == -1) {
-                return solutionMatrix;
+                //return solutionMatrix;
+                return getNonZeroSolution(solutionMatrix, n, m);
             }
 
             for(int row2 = row1 + 1; row2 < n; row2++) {
@@ -216,7 +213,6 @@ public class Matrix {
                 .toArray(double[][]::new);
     }
 
-
     private static void sortEquations(double[][] matrix) {
         Arrays.sort(matrix, (r1, r2) -> {
             for (int i = 0; i < matrix[0].length; i++) {
@@ -225,6 +221,91 @@ public class Matrix {
             }
             return 0;
         });
+    }
+
+    public static double laplaceExpension(double[][] matrix) {
+        if(matrix.length == 0 || matrix[0].length == 0) {
+            throw new IllegalArgumentException("structures.Matrix has no rows and columns");
+        }
+
+        if(matrix[0].length != matrix.length) {
+            throw new IllegalArgumentException("You need a quadratic matrix with the same number of rows and columns");
+        }
+
+
+        int[] columnPermutation = new int[matrix.length];
+        boolean[] usedColumns = new boolean[matrix.length];
+        List<Double> solutionList = new ArrayList<>();
+
+        calcLaplaceExp(matrix, 0, solutionList, columnPermutation, usedColumns);
+
+
+        return solutionList.stream()
+                .mapToDouble(Double::doubleValue)
+                .sum();
+    }
+
+    private static void calcLaplaceExp(final double[][] matrix,int currRow ,List<Double> solutionList, int[] columnPermutation, boolean[] usedColumns) {
+        int n = matrix.length;
+
+        if(currRow < n) {
+            int num = 1;
+            while(num <= matrix[0].length) {
+                if(!usedColumns[num-1]) {
+                    int freeNumIdx = num-1;
+
+                    if(columnPermutation[currRow] != 0) {
+                        //look if you have to give permutation free -> set to false
+                        int usedColumnIdx = columnPermutation[currRow]-1;
+                        usedColumns[usedColumnIdx] =  false;
+                    }
+
+                    columnPermutation[currRow] = num;
+                    //Set previously free column true
+                    usedColumns[freeNumIdx] = true;
+                    calcLaplaceExp(matrix, currRow + 1, solutionList, columnPermutation, usedColumns);
+                }
+                num++;
+            }
+
+            usedColumns[columnPermutation[currRow]-1] = false;
+            columnPermutation[currRow] = 0;
+
+            return;
+        }
+
+        addPermutationTerm(matrix,columnPermutation, solutionList);
+        return;
+    }
+
+    private static void addPermutationTerm(double[][] matrix ,int[] columnPermutation, List<Double> solutionList) {
+        int permutations = countInversions(columnPermutation);
+
+        int sign = 1;
+
+        if(permutations%2 == 1) {
+            sign = -1;
+        }
+
+        double solution = 1;
+
+        for(int i = 0; i< columnPermutation.length; i++) {
+            solution*= matrix[i][columnPermutation[i]-1];
+        }
+
+        solutionList.add((solution*sign));
+    }
+
+    private static int countInversions(int[] perm) {
+        int count = 0;
+        for (int i = 0; i < perm.length; i++) {
+            for (int j = i + 1; j < perm.length; j++) {
+                if (perm[i] > perm[j]) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     public static String stringOf(double[][] a) {
