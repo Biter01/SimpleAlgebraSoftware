@@ -67,7 +67,7 @@ System.out.println(e3.multiplyConstant(5));
 //Output -> 30.0*x - 30.0*y - 75.0
 ```
 
-### Multiply Matrices and calculate Determinants
+### Multiply Matrices and calculate determinants
 
 ```java
 double [][] c = {
