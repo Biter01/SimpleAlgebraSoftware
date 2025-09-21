@@ -5,8 +5,6 @@ import structures.LinearExpression;
 import structures.Matrix;
 import structures.exceptions.NoSolutionException;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static structures.Matrix.linearSolve;
 
@@ -177,9 +175,9 @@ public class MatrixTest {
                 { 4,  0,  2, -2,  3,  1, -5,  0}
         };
 
-        assertEquals(-11, Matrix.laplaceExpension(a));
-        assertEquals(-5977800, Matrix.laplaceExpension(b));
-        assertEquals(-104348, Matrix.laplaceExpension(matrix8x8));
+        assertEquals(-11, Matrix.laplaceExpansion(a));
+        assertEquals(-5977800, Matrix.laplaceExpansion(b));
+        assertEquals(-104348, Matrix.laplaceExpansion(matrix8x8));
 
     }
 
