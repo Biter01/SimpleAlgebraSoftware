@@ -9,7 +9,7 @@ A lightweight algebra library for working with **matrices**, **vectors** and **l
 - Solve linear systems
 - Gauss elimination
 - Matrix multiplication
-- Calculate Determinant with Laplace Extension
+- Calculate Determinant with Laplace Expansion
 
 ### Vectors in $\mathbb{R}^{n}$
 - Basic operations (addition, scaling, …)
@@ -76,7 +76,7 @@ double [][] c = {
     {5,2,6}
 };
 
-System.out.println(laplaceExpension(c));
+System.out.println(laplaceExpansion(c));
 //Output -> -11.0
 
 double[][] a = {{1,2,3},{4,5,6},{7,8,9}};
