@@ -223,7 +223,7 @@ public class Matrix {
         });
     }
 
-    public static double laplaceExpension(double[][] matrix) {
+    public static double laplaceExpansion(double[][] matrix) {
         if(matrix.length == 0 || matrix[0].length == 0) {
             throw new IllegalArgumentException("structures.Matrix has no rows and columns");
         }

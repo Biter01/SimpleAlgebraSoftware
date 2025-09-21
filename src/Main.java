@@ -46,7 +46,7 @@ public class Main {
                 {5,2,6}
         };
 
-        System.out.println(laplaceExpension(c));
+        System.out.println(laplaceExpansion(c));
         //Output -> -11.0
 
     }
