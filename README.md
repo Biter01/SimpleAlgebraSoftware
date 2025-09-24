@@ -55,7 +55,6 @@ System.out.println(Arrays.toString(linearSolve(u)));
 ### Work with LinearExpression
 
 ```java
-LinearExpression e3 =  e1.add(e2);
 LinearExpression e1 = new LinearExpression("-3*y + 5*x + 5");
 LinearExpression e2 = new LinearExpression("1*x - 5*y - 20 +2*y");
 LinearExpression e3 =  e1.add(e2);
