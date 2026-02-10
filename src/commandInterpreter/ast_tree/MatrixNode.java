@@ -1,6 +1,7 @@
 package commandInterpreter.ast_tree;
 
-import structures.Matrix;
+import commandInterpreter.Context;
+import math_lib.Matrix;
 
 import java.util.List;
 
@@ -11,13 +12,11 @@ public class MatrixNode implements AstNode {
     }
 
     @Override
-    public Matrix execute() {
+    public Matrix execute(Context ctx) {
         double[][] array = values.stream()
                 .map(row -> row.stream().mapToDouble(Double::doubleValue).toArray())
                 .toArray(double[][]::new);
 
-        Matrix matrix = new Matrix(array);
-
-        return matrix;
+        return new Matrix(array);
     }
 }

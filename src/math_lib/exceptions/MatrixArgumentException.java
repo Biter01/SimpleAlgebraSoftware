@@ -1,10 +1,9 @@
-package structures.exceptions;
+package math_lib.exceptions;
 
-public class NoSolutionException extends Exception {
-
+public class MatrixArgumentException extends Exception {
     private final String string;
 
-    public NoSolutionException(String message) {
+    public MatrixArgumentException(String message) {
         super(message);
         this.string = message;
     }

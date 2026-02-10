@@ -1,6 +1,6 @@
 package structureTest;
 import org.junit.jupiter.api.Test;
-import structures.LinearExpression;
+import math_lib.LinearExpression;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

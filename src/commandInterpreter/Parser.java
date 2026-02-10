@@ -1,12 +1,13 @@
 package commandInterpreter;
 
-import commandInterpreter.exceptions.ParseException;
+import commandInterpreter.exceptions.unchecked.ParseException;
 import commandInterpreter.ast_tree.*;
 import commandInterpreter.tokens.Token;
 import commandInterpreter.tokens.TokenType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Parser {
     private final List<Token> tokens;
@@ -47,11 +48,13 @@ public class Parser {
 
     AstNode parseStatement() {
         Token t = peek();
+
+
         if (t.type == TokenType.IDENT && peekNext().type == TokenType.LPAR) {
            return parseFunction();
         } else if(t.type == TokenType.IDENT && peekNext().type == TokenType.EQUAL) {
             return parseAssignVariable();
-        } else if(t.type == TokenType.NUMBER || t.type == TokenType.LPAR || t.type == TokenType.IDENT) {
+        } else if(t.type == TokenType.NUMBER || t.type == TokenType.LPAR || t.type == TokenType.IDENT || t.type == TokenType.LBRACK) {
             return parseExpression();
         }
         throw new ParseException("Not a correct Symbol to begin your Statement " + peek().text);
@@ -66,7 +69,6 @@ public class Parser {
             AstNode right = parseTerm();
             left = new BinaryExpressionNode(left, op.type, right);
         }
-
 
         return left;
     }
@@ -103,36 +105,36 @@ public class Parser {
             return e;
         }
 
-        throw new ParseException("Expected number or '('");
+        throw new ParseException("Not a correct symbol in expression " + peek().text);
     }
 
     AstNode parseFunction() {
-        if(peek().text.equals("solve")) {
-            return parseSolve();
-        } else if(peek().text.equals("det")) {
-            return parseDeterminant();
-        } else {
-            throw new ParseException("Not a correct Symbol to begin your Statement " + peek().text);
-        }
-    }
+        FunctionType ft = getFunctionType(peek().text);
 
-    AstNode parseDeterminant() {
         consume(TokenType.IDENT);
         consume(TokenType.LPAR);
+        boolean correctFunctionArgument = (peek().type == TokenType.IDENT || peek().type == TokenType.LBRACK);
 
         AstNode arg;
-        if(peek().type == TokenType.LBRACK) {
-            arg = parseMatrix();
-        } else if(peek().type == TokenType.IDENT) {
-            arg = new VariableNode(consume(TokenType.IDENT).text);
+        if(correctFunctionArgument) {
+            arg = parseExpression();
         } else {
-            throw new ParseException("Not a correct symbol in command " + peek().text);
+            throw new ParseException("Expected a variable or a matrix as argument");
         }
 
         consume(TokenType.RPAR);
         //expect(TokenType.EOF);
 
-        return new DetFuncNode(arg);
+        return new MonoFunctionNode(ft, arg);
+    }
+
+    private FunctionType getFunctionType(String text) {
+        Optional<FunctionType> func =  FunctionType.fromIdentifier(peek().text);
+        if(func.isEmpty()) {
+            throw new ParseException("Function with name'" + peek().text + "' not found");
+        }
+
+        return func.get();
     }
 
     AstNode parseAssignVariable() {
@@ -143,7 +145,7 @@ public class Parser {
 
         if(peek().type == TokenType.LBRACK) {
             value =  parseMatrix();
-        } else if(peek().type == TokenType.IDENT || peek().type == TokenType.NUMBER) {
+        } else if(peek().type == TokenType.IDENT || peek().type == TokenType.NUMBER || peek().type == TokenType.LPAR) {
             value = parseExpression();
         } else {
             throw new ParseException("Not a correct symbol in command " + peek().text);
@@ -152,25 +154,6 @@ public class Parser {
         //expect(TokenType.EOF);
 
         return new AssignNode(nameTok.text, value);
-    }
-
-    AstNode parseSolve() {
-        consume(TokenType.IDENT);
-        consume(TokenType.LPAR);
-
-        AstNode arg;
-        if(peek().type == TokenType.RBRACK) {
-            arg = parseMatrix();
-        } else if(peek().type == TokenType.IDENT) {
-            arg = new VariableNode(consume(TokenType.IDENT).text);
-        } else {
-            throw new ParseException("Not a correct symbol in command " + peek().text);
-        }
-
-        consume(TokenType.RPAR);
-        //expect(TokenType.EOF);
-
-        return new SolveFuncNode(arg);
     }
 
     AstNode parseMatrix() {

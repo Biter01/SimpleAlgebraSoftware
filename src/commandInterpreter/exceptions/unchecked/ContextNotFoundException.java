@@ -1,6 +1,6 @@
-package commandInterpreter.exceptions;
+package commandInterpreter.exceptions.unchecked;
 
-public class ContextNotFoundException extends RuntimeException {
+public class ContextNotFoundException extends CommandException {
         private final String string;
 
         public ContextNotFoundException(String message) {

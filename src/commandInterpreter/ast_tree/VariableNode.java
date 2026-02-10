@@ -10,9 +10,8 @@ public class VariableNode implements AstNode {
     }
 
     @Override
-    public Object execute() {
-        AstNode variableExpr =  Context.getInstance().lookup(identifier);
-        return variableExpr.execute();
+    public Object execute(Context ctx) {
+        return ctx.lookup(identifier);
     }
 
 }

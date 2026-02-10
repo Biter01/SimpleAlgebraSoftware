@@ -1,29 +1,23 @@
 package commandInterpreter;
 
-import commandInterpreter.exceptions.ContextNotFoundException;
+import commandInterpreter.exceptions.unchecked.ContextNotFoundException;
 import commandInterpreter.ast_tree.AstNode;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Context {
-    private static Context ctx;
-    private Map<String, AstNode> variables;
+    private final Map<String, Object> variables;
 
-    public static Context getInstance() {
-        if(ctx == null) {
-            ctx = new Context();
-            ctx.variables = new HashMap<>();
-        }
-
-        return ctx;
+    public Context() {
+        variables = new HashMap<>();
     }
 
-    public void set(String identifier, AstNode variable) {
+    public void set(String identifier, Object variable) {
         variables.put(identifier, variable);
     }
 
-    public AstNode lookup(String text) throws ContextNotFoundException {
+    public Object lookup(String text) throws ContextNotFoundException {
         if(!variables.containsKey(text)) {
             throw new ContextNotFoundException("Could not find variable '" + text + "'");
         }
