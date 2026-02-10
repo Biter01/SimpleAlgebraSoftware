@@ -13,9 +13,10 @@ public class AssignNode implements AstNode {
     }
 
     @Override
-    public Object execute() {
-        Context.getInstance().set(this.name, this.value);
-        return value.execute();
+    public Object execute(Context ctx) {
+        Object excutedValue = this.value.execute(ctx);
+        ctx.set(this.name, excutedValue);
+        return excutedValue;
     }
 
 }

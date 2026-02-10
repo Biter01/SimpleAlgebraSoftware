@@ -1,9 +1,10 @@
 package structureTest;
 
+import math_lib.exceptions.MatrixArgumentException;
 import org.junit.jupiter.api.Test;
-import structures.LinearExpression;
-import structures.Matrix;
-import structures.exceptions.NoSolutionException;
+import math_lib.LinearExpression;
+import math_lib.Matrix;
+import math_lib.exceptions.NoSolutionException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatrixTest {
@@ -190,7 +191,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testDeterminant() {
+    public void testDeterminant() throws MatrixArgumentException {
 
         double [][] a = {
                 {2,1,3},
@@ -227,7 +228,7 @@ public class MatrixTest {
     }
 
     @Test
-    public void testMatrixMultiply() {
+    public void testMatrixMultiply() throws MatrixArgumentException {
         double[][] a = {{1,2,3},{4,5,6},{7,8,9}};
         double[][] b = {{1,2},{4,5},{7,8}};
         double[][] c = {{1,2}, {4,5}};
@@ -242,12 +243,12 @@ public class MatrixTest {
 
         assertEquals(expectedMatrix, A.multiplyMatrix(B));
 
-        assertThrows(IllegalArgumentException.class, () -> A.multiplyMatrix(C));
+        assertThrows(MatrixArgumentException.class, () -> A.multiplyMatrix(C));
 
     }
 
     @Test
-    public void testMatrixAddition() {
+    public void testMatrixAddition() throws MatrixArgumentException {
         double[][] a = {{1,2,3},{4,5,6},{7,8,9}};
         double[][] b = {{1,2,3},{4,5,6},{7,8,9}};
 
@@ -260,6 +261,21 @@ public class MatrixTest {
 
         assertEquals(expectedMatrix, A.addMAtrix(B));
 
+    }
+
+    @Test
+    public void testMatrixSubtraction() throws MatrixArgumentException{
+        double[][] a = {{1,2,3},{4,5,6},{7,8,9}};
+        double[][] b = {{1,2,3},{4,5,6},{7,8,9}};
+
+        double[][] c = {{2,4,6}, {8,10,12}, {14,16,18}};
+
+        Matrix C = new Matrix(c);
+
+        Matrix A = new Matrix(a);
+        Matrix B = new Matrix(b);
+
+        assertEquals(A, C.subtractMatrix(B));
     }
 
 }

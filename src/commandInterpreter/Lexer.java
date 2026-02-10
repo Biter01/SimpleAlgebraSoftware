@@ -27,7 +27,8 @@ public class Lexer {
 
     public List<Token> tokenize(String input) {
         List<Token> tokens = new ArrayList<>();
-        Matcher m = TOKEN_PATTERN.matcher(input);
+        String inputTrimmed = input.replaceAll(" ", "");
+        Matcher m = TOKEN_PATTERN.matcher(inputTrimmed);
 
         while (m.find()) {
             if (m.group("NUMBER") != null)

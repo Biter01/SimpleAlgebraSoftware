@@ -1,5 +1,7 @@
 package commandInterpreter.ast_tree;
 
+import commandInterpreter.Context;
+
 public class NumberExpr implements AstNode {
 
     public Double value;
@@ -9,7 +11,7 @@ public class NumberExpr implements AstNode {
     }
 
     @Override
-    public Double execute() {
+    public Double execute(Context ctx) {
         return value;
     }
 }

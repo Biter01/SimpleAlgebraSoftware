@@ -1,4 +1,4 @@
-package structures;
+package math_lib;
 
 public class RVector {
     public final double[] vi;

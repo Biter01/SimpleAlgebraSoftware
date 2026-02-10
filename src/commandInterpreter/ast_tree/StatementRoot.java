@@ -1,5 +1,7 @@
 package commandInterpreter.ast_tree;
 
+import commandInterpreter.Context;
+
 public class StatementRoot implements AstNode {
 
     AstNode node;
@@ -9,8 +11,8 @@ public class StatementRoot implements AstNode {
     }
 
     @Override
-    public Object execute() {
-        return node.execute();
+    public Object execute(Context ctx) {
+        return node.execute(ctx);
     }
 
 }

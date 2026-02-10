@@ -1,5 +1,7 @@
-package structures;
-import structures.exceptions.NoSolutionException;
+package math_lib;
+import math_lib.exceptions.DeterminantException;
+import math_lib.exceptions.MatrixArgumentException;
+import math_lib.exceptions.NoSolutionException;
 import java.util.*;
 
 public class Matrix {
@@ -8,7 +10,7 @@ public class Matrix {
     private final int rows;
     private final int cols;
 
-    public Matrix(double[][] matrixData) {
+    public Matrix(double[][] matrixData)  {
         if (matrixData.length == 0 || matrixData[0].length == 0) {
             throw new IllegalArgumentException("Matrix must not be empty");
         }
@@ -22,12 +24,12 @@ public class Matrix {
         }
     }
 
-    public Matrix multiplyMatrix(Matrix b) {
+    public Matrix multiplyMatrix(Matrix b) throws MatrixArgumentException {
         double[][] aMatrixData = copyData();
         Matrix a = new Matrix(aMatrixData);
 
         if(a.cols != b.rows) {
-            throw new IllegalArgumentException("structures.Matrix does not have the same number of columns and rows");
+            throw new MatrixArgumentException("structures.Matrix does not have the same number of columns and rows");
         }
 
         double[][] c = new double[a.rows][b.cols];
@@ -44,12 +46,12 @@ public class Matrix {
     }
 
 
-    public Matrix addMAtrix(Matrix b) {
+    public Matrix addMAtrix(Matrix b) throws MatrixArgumentException {
         double[][] aMatrixData = copyData();
         Matrix a = new Matrix(aMatrixData);
 
         if(a.cols != b.cols || a.rows != b.rows) {
-            throw new IllegalArgumentException("structures.Matrix does not have the same number of columns and rows");
+            throw new MatrixArgumentException("structures.Matrix does not have the same number of columns and rows");
         }
 
         double[][] c = new double[a.rows][a.cols];
@@ -62,6 +64,25 @@ public class Matrix {
 
         return new Matrix(c);
 
+    }
+
+    public Matrix subtractMatrix(Matrix b) throws MatrixArgumentException {
+        double[][] aMatrixData = copyData();
+        Matrix a = new Matrix(aMatrixData);
+
+        if(a.cols != b.cols || a.rows != b.rows) {
+            throw new MatrixArgumentException("structures.Matrix does not have the same number of columns and rows");
+        }
+
+        double[][] c = new double[a.rows][a.cols];
+
+        for(int i = 0; i < a.rows; i++) {
+            for(int k = 0; k < a.cols; k++) {
+                c[i][k] = a.data[i][k] - b.data[i][k];
+            }
+        }
+
+        return new Matrix(c);
     }
 
 
@@ -201,10 +222,6 @@ public class Matrix {
         // Copy of Matrix Data for the solution
         double[][] solutionMatrixData = copyData();
 
-        if(solutionMatrixData.length == 0 || solutionMatrixData[0].length == 0) {
-            throw new IllegalArgumentException("structures.Matrix has no rows and columns");
-        }
-
         sortEquations(solutionMatrixData);
 
         int n = solutionMatrixData.length;
@@ -260,15 +277,11 @@ public class Matrix {
         });
     }
 
-    public double laplaceExpansion() {
+    public double laplaceExpansion() throws DeterminantException {
         double[][] matrixData = copyData();
 
-        if(matrixData.length == 0 || matrixData[0].length == 0) {
-            throw new IllegalArgumentException("structures.Matrix has no rows and columns");
-        }
-
         if(matrixData[0].length != matrixData.length) {
-            throw new IllegalArgumentException("You need a quadratic matrix with the same number of rows and columns");
+            throw new DeterminantException("You need a quadratic matrix with the same number of rows and columns");
         }
 
         int[] columnPermutation = new int[matrixData.length];
@@ -349,7 +362,9 @@ public class Matrix {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
+        sb.append("\n");
         for(int i = 0; i < data.length; i++) {
+            sb.append("  ");
             sb.append("[");
             for(int j = 0; j < data[0].length; j++) {
 
@@ -363,7 +378,9 @@ public class Matrix {
                 sb.append("]");
             } else {
                 sb.append("],");
+
             }
+            sb.append("\n");
         }
         sb.append("]");
         return sb.toString();
