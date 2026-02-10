@@ -1,6 +1,6 @@
 # SimpleAlgebraSoftware
 
-A lightweight algebra CLI for working with **matrices**, **vectors** and **expressions**.
+This is a lightweight CLI tool created in Java
 
 ## Features
 - Solve linear systems
