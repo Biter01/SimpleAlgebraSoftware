@@ -27,7 +27,7 @@ Type `exit` to quit the application.
 
 ### Work with Variables and Expressions
 
-```md
+```
 > A = (1+2)*3
 9.0
 > B = 15
@@ -38,7 +38,7 @@ Type `exit` to quit the application.
 
 ### Solve linear systems
 
-```md
+```
 > solve([[3,11,10,9000], [6,2,2,5000], [150,220,120,194000]])
 
 > A = [[1, 1, 0, 0, 0, 0, 0, 1],
@@ -57,7 +57,7 @@ Type `exit` to quit the application.
 
 ### Multiply matrices and calculate determinants
 
-```md
+```
 
 > A = [[1,2],[3,4]]
 [
