@@ -82,3 +82,6 @@ Type `exit` to quit the application.
 - No symbolic simplification beyond linear expressions
 - Expressions evaluation with variables and constants either in $\mathbb{R}$ or $\mathbb{R}^{n \times m}$
 
+## Releases
+Are you curious about the app?<br>  
+Check out the [release on GitHub](https://github.com/Biter01/SimpleAlgebraSoftware/releases/tag/v1.0) and have fun! 🎉
