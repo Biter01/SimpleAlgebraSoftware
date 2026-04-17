@@ -3,11 +3,12 @@
 This is a lightweight CLI tool for matrices, linear systems and expressions
 
 ## Features
-- Solve linear systems
-- Gauss elimination
-- Matrix multiplication
-- Calculate determinants
-- Work with Expressions
+- **Interactive REPL** with variable bindings that persist across inputs
+- **Linear system solver** using Gaussian elimination with back-substitution
+- **Parametric solutions** for underdetermined systems — free variables are 
+  introduced and propagated symbolically, so the result is a vector of 
+  linear expressions rather than a single point
+- **Matrix operations** — multiplication and determinant calculation
 
 ## Supported Commands
 - `help` - display available commands
@@ -16,6 +17,33 @@ This is a lightweight CLI tool for matrices, linear systems and expressions
 - `det(matrix)` – calculate the determinant
 - Variable assignment: `A = ...`
 - Expression evaluation: `C = A + B * (A+B)/ 3`
+
+## Architecture
+ 
+The CLI processes every input line through a small compiler-style pipeline:
+ 
+```
+Input ──► Lexer ──► Parser ──► AST ──► Evaluator / Solver ──► Output
+```
+ 
+- **Lexer** – tokenizes the input stream (numbers, identifiers, operators, brackets, matrix literals).
+- **Parser** – a handwritten recursive-descent parser that respects operator precedence and
+  associativity, and builds a typed Abstract Syntax Tree.
+- **AST** – node types for scalars, vectors, matrices, variables, binary/unary operations and
+  built-in function calls (`solve`, `det`).
+- **Evaluator** – walks the AST, resolves variable bindings from the environment, and dispatches
+  operations based on operand types (scalar × scalar, scalar × matrix, matrix × matrix, …).
+- **Gauss Solver** – performs Gaussian elimination with back-substitution
+  on the augmented matrix. When the system is
+  underdetermined, free variables are introduced and the result is returned as a vector of linear
+  expressions rather than a single numeric solution.
+## Implementation Details
+- **Language:** Java
+- **Parser strategy:** handwritten recursive descent (no parser generator / no external library)
+- **Symbolic layer:** a minimal linear-expression type supports addition, subtraction and scalar
+  multiplication, which is what the Gauss solver needs to express parametric solutions
+- **Tests:** a JUnit test suite covers the lexer, parser, evaluator and solver, including edge cases
+  such as singular matrices, underdetermined systems and nested expressions
 
 ## Usage
 Start the CLI application and enter expressions, variables or commands directly.<br>
