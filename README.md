@@ -1,6 +1,6 @@
 # SimpleAlgebraSoftware
 
-This is a lightweight CLI tool for matrices, linear systems and expressions
+This is a lightweight tool for matrices, linear systems and expressions
 
 ## Features
 - **Interactive REPL** with variable bindings that persist across inputs
@@ -103,6 +103,17 @@ Type `exit` to quit the application.
 4.0
 
 ```
+
+## Showcase
+
+### CLI Version
+
+![Showcase Example](showcaseExample1.png)
+
+### WEB Version
+
+![Showcase Example](showcaseExample2.png)
+
 ## Mathematical Scope
 - Scalar expressions in $\mathbb{R}$
 - Vectors in $\mathbb{R}^n$
@@ -112,4 +123,5 @@ Type `exit` to quit the application.
 
 ## Releases
 Are you curious about the app?<br>  
-Check out the [release on GitHub](https://github.com/Biter01/SimpleAlgebraSoftware/releases/tag/v1.0) and have fun! 🎉
+Check out the [release on GitHub](https://github.com/Biter01/SimpleAlgebraSoftware/releases/tag/v1.1) 🎉
+
