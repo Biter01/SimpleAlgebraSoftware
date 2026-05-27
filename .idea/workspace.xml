@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a0cad365-2741-464a-a777-2b92c91334c5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/web/ReplBridge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/values/MatrixValue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/values/NumberValue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/values/SolutionValue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/values/Value.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/util/cli/CLIUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleAlgebraSoftware.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleAlgebraSoftware.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/CLIApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/CLIApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/Context.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/Executor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/AssignNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/AssignNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/AstNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/BinaryExpressionNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/BinaryExpressionNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/FunctionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/FunctionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/MatrixNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/MatrixNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/MonoFunctionNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/MonoFunctionNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/NumberExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/NumberExpr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/StatementRoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/StatementRoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/ast_tree/VariableNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/ast/VariableNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/exceptions/unchecked/CommandException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/exceptions/unchecked/CommandException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/exceptions/unchecked/CommandExecutorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/exceptions/unchecked/CommandExecutorException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/exceptions/unchecked/ContextNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/exceptions/unchecked/ContextNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/exceptions/unchecked/ParseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/exceptions/unchecked/ParseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/tokens/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/tokens/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commandInterpreter/tokens/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commandInterpreter/tokens/TokenType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math_lib/LinearExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mathlib/LinearExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math_lib/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mathlib/Matrix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math_lib/RVector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mathlib/RVector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math_lib/exceptions/DeterminantException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mathlib/exceptions/DeterminantException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math_lib/exceptions/LinExpException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mathlib/exceptions/LinExpException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math_lib/exceptions/MatrixArgumentException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mathlib/exceptions/MatrixArgumentException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/math_lib/exceptions/NoSolutionException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mathlib/exceptions/NoSolutionException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Factorial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/Factorial.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/commandInterpreter/CommandInterpreterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/commandInterpreter/CommandInterpreterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/structureTest/LinearExpressionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/structureTest/LinearExpressionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/structureTest/MatrixTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/structureTest/MatrixTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Record" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Biter01&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Biter01/SimpleAlgebraSoftware.git&quot;,
+    &quot;accountId&quot;: &quot;9b022694-2e7c-49ba-8b9b-063411a4d8a0&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="3DOZseI74hWSAfax2Kp3tWY5OEd" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "JUnit.CommandInterpreterTest.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sebas/Documents/Java/SimpleAlgebraSoftware",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a0cad365-2741-464a-a777-2b92c91334c5" name="Changes" comment="" />
+      <created>1778155284980</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778155284980</updated>
+      <workItem from="1778155286142" duration="3649000" />
+      <workItem from="1778250290012" duration="621000" />
+      <workItem from="1778417372015" duration="6196000" />
+      <workItem from="1778424867818" duration="451000" />
+      <workItem from="1778849199109" duration="11000" />
+      <workItem from="1779123152521" duration="2533000" />
+      <workItem from="1779128737771" duration="15000" />
+      <workItem from="1779882758508" duration="9459000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

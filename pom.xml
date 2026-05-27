@@ -4,20 +4,31 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Projekt-Infos -->
-    <groupId>com.example</groupId>
+    <groupId>com.biter01</groupId>
     <artifactId>SimpleAlgebraSoftware</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
-    <!-- Compiler-Version -->
     <properties>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
+        <teavm.version>0.14.0</teavm.version>
     </properties>
 
-    <!-- Abhängigkeiten -->
+    <repositories>
+        <repository>
+            <id>teavm-repo</id>
+            <url>https://teavm.org/maven/repository</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>teavm-plugin-repo</id>
+            <url>https://teavm.org/maven/repository</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
-        <!-- Piccolo2D -->
         <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -25,16 +36,122 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- TeaVM JS-Interop (@JSExport etc.).
+             'provided' = compile-time noetig, aber NICHT ins Shaded-JAR. -->
+        <dependency>
+            <groupId>org.teavm</groupId>
+            <artifactId>teavm-jso</artifactId>
+            <version>${teavm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- TeaVM Java-Klassenbibliothek-Emulation -->
+        <dependency>
+            <groupId>org.teavm</groupId>
+            <artifactId>teavm-classlib</artifactId>
+            <version>${teavm.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
-    <!-- Optional: Compiler-Plugin -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <release>21</release>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>app.Main</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- ============================================================
+             DESKTOP-BUILD (Standard, ohne -P-Flag aktiv):
+             erstellt das Shaded-JAR fuer die CLI-App.
+             "mvn package"  →  laeuft mit diesem Profil
+             ============================================================ -->
+        <profile>
+            <id>desktop</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <version>3.5.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>shade</goal>
+                                </goals>
+                                <configuration>
+                                    <transformers>
+                                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                            <mainClass>app.Main</mainClass>
+                                        </transformer>
+                                    </transformers>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- ============================================================
+             JS-BUILD: nur aktiv mit "mvn package -Pjs"
+             KEIN Shade-Plugin → keine JAR-Ueberschreibung.
+             Output: target/web/ mit .js, .js.map, .js.map.json
+             ============================================================ -->
+        <profile>
+            <id>js</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.teavm</groupId>
+                        <artifactId>teavm-maven-plugin</artifactId>
+                        <version>${teavm.version}</version>
+                        <executions>
+                            <execution>
+                                <id>web-client</id>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                                <phase>process-classes</phase>
+                                <configuration>
+                                    <targetType>JAVASCRIPT</targetType>
+                                    <jsModuleType>ES2015</jsModuleType>
+                                    <mainClass>app.web.ReplBridge</mainClass>
+                                    <targetDirectory>${project.build.directory}/web</targetDirectory>
+                                    <minifying>false</minifying>
+                                    <optimizationLevel>ADVANCED</optimizationLevel>
+                                    <debugInformationGenerated>true</debugInformationGenerated>
+                                    <sourceMapsGenerated>true</sourceMapsGenerated>
+                                    <sourceFilesCopied>true</sourceFilesCopied>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

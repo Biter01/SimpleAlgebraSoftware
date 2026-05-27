@@ -1,10 +1,10 @@
 package structureTest;
 
-import math_lib.exceptions.MatrixArgumentException;
+import mathlib.exceptions.MatrixArgumentException;
 import org.junit.jupiter.api.Test;
-import math_lib.LinearExpression;
-import math_lib.Matrix;
-import math_lib.exceptions.NoSolutionException;
+import mathlib.LinearExpression;
+import mathlib.Matrix;
+import mathlib.exceptions.NoSolutionException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatrixTest {
