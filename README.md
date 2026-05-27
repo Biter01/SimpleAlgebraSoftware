@@ -4,7 +4,7 @@ This is a lightweight tool for matrices, linear systems and expressions
 
 ## Features
 - **Interactive REPL** with variable bindings that persist across inputs
-- **Linear system solver** using Gaussian elimination with back-substitution
+- **Linear system solver** using Gaussian elimination with **back-substitution**
 - **Parametric solutions** for underdetermined systems — free variables are 
   introduced and propagated symbolically, so the result is a vector of 
   linear expressions rather than a number
