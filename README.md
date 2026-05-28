@@ -7,7 +7,7 @@ This is a lightweight tool for matrices, linear systems and expressions
 - **Linear system solver** using Gaussian elimination with **back-substitution**
 - **Parametric solutions** for underdetermined systems — free variables are 
   introduced and propagated symbolically, so the result is a vector of 
-  linear expressions rather than a number
+  linear expressions rather than a point
 - **Matrix operations** — multiplication and determinant calculation
 
 ## Supported Commands
